@@ -14,7 +14,13 @@ exports.postData = async (req, res) => {
 
         const numbers = data.filter(item => !isNaN(item));
         const alphabets = data.filter(item => isNaN(item));
-        const highest_alphabet = alphabets?.length ? [alphabets.sort().reverse()[0]] : [];
+
+        let highest_alphabet = "";
+        alphabets.forEach(alphabet => {
+            if (!highest_alphabet || alphabet.toLowerCase() > highest_alphabet.toLowerCase()) {
+                highest_alphabet = alphabet;
+            }
+        });
 
         let response = {
             is_success: true,
@@ -23,7 +29,7 @@ exports.postData = async (req, res) => {
             roll_number: "ABCD123",
             numbers: numbers,
             alphabets: alphabets,
-            highest_alphabet: highest_alphabet
+            highest_alphabet: highest_alphabet !== "" ? [highest_alphabet] : []
         }
         res.status(200).json(response);
     } catch (error) {
