@@ -1,7 +1,7 @@
 exports.postData = async (req, res) => {
     try {
         const { data } = req.body;
-
+        console.log(data);
         if (!Array.isArray(data) || data.length === 0) {
             res.status(400).json({ error: "Data must have atleast one value." });
             return;
